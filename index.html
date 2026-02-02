@@ -5,256 +5,316 @@
 <title>For Riyaaaaa 💖</title>
 
 <style>
-:root {
-  --primary: #ff4d6d;
-  --soft: #fff0f5;
-  --bg: linear-gradient(120deg, #ff758c, #ff7eb3);
+:root{
+  --primary:#ff4d6d;
+  --soft:#fff0f5;
+  --bg:linear-gradient(120deg,#ff758c,#ff7eb3);
 }
 
-body {
-  margin: 0;
-  height: 100vh;
-  background: var(--bg);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: "Segoe UI", Arial, sans-serif;
-  overflow: hidden;
+*{
+  box-sizing:border-box;
+  font-family:"Segoe UI",Arial,sans-serif;
 }
 
-.container {
-  width: 390px;
-  background: #fff;
-  border-radius: 22px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
-  padding: 26px;
+body{
+  margin:0;
+  height:100vh;
+  background:var(--bg);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
 }
 
-h1 {
-  color: var(--primary);
-  margin-bottom: 4px;
+/* ENVELOPE */
+#envelopeScreen{
+  width:340px;
+  background:#fff;
+  padding:30px;
+  border-radius:24px;
+  text-align:center;
+  box-shadow:0 20px 40px rgba(0,0,0,.25);
 }
 
-.subtitle {
-  font-size: 13px;
-  color: #777;
+.envelope{
+  width:180px;
+  height:120px;
+  margin:0 auto 20px;
+  background:#ffd6e0;
+  border-radius:8px;
+  position:relative;
 }
 
-.progress {
-  margin: 12px 0 18px;
-  font-size: 13px;
-  color: #555;
+.flap{
+  position:absolute;
+  inset:0;
+  background:#ffb3c1;
+  clip-path:polygon(0 0,50% 55%,100% 0);
+  transform-origin:top;
+  transition:.8s ease;
 }
 
-.card {
-  background: var(--soft);
-  border-radius: 16px;
-  padding: 18px;
-  min-height: 120px;
-  font-size: 15px;
-  color: #444;
-  opacity: 0;
-  animation: fadeIn 1.2s ease forwards;
+.open .flap{
+  transform:rotateX(180deg);
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+.heart-seal{
+  font-size:42px;
+  background:none;
+  border:none;
+  cursor:pointer;
+  animation:pulse 1.3s infinite;
 }
 
-.timeline {
-  border-left: 3px solid var(--primary);
-  padding-left: 14px;
+.sparkle{
+  position:absolute;
+  font-size:18px;
+  animation:sparkle 1.6s ease forwards;
+  pointer-events:none;
 }
 
-.timeline-item span {
-  font-size: 12px;
-  color: #999;
+/* MAIN */
+.container{
+  width:390px;
+  background:#fff;
+  border-radius:22px;
+  box-shadow:0 20px 40px rgba(0,0,0,.25);
+  padding:26px;
+  display:none;
 }
 
-.reasons {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
+h1{color:var(--primary);margin:0;}
+.subtitle{font-size:13px;color:#777;}
+.progress{margin:12px 0 18px;font-size:13px;color:#555;}
+
+.card{
+  background:var(--soft);
+  border-radius:16px;
+  padding:18px;
+  min-height:150px;
+  font-size:15px;
+  color:#444;
+  animation:fadeIn 1.2s forwards;
 }
 
-.reason {
-  background: white;
-  border-radius: 12px;
-  padding: 10px;
-  font-size: 13px;
+#reasonBox{
+  background:#fff;
+  border-radius:14px;
+  padding:16px;
+  text-align:center;
 }
 
-.love {
-  font-size: 34px;
-  color: var(--primary);
-  font-weight: bold;
-  text-align: center;
-  animation: pulse 1.4s infinite;
+#reasonCount{font-size:13px;color:#888;margin-bottom:8px;}
+#reasonText{font-size:15px;min-height:60px;}
+
+.actions{text-align:center;margin-top:16px;}
+
+button{
+  border:none;
+  border-radius:22px;
+  padding:10px 24px;
+  font-size:14px;
+  cursor:pointer;
+  margin:6px;
 }
 
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.08); }
-  100% { transform: scale(1); }
+.primary{background:var(--primary);color:#fff;}
+.secondary{background:#ffd6e0;color:#333;}
+
+.love{
+  font-size:34px;
+  color:var(--primary);
+  font-weight:bold;
+  text-align:center;
+  animation:pulse 1.4s infinite;
 }
 
-.actions {
-  text-align: center;
-  margin-top: 16px;
+.confetti{
+  position:absolute;
+  width:8px;
+  height:8px;
+  animation:fall 3s linear forwards;
 }
 
-button {
-  border: none;
-  border-radius: 22px;
-  padding: 10px 24px;
-  font-size: 14px;
-  cursor: pointer;
-  margin: 6px;
+.heart-rain{
+  position:absolute;
+  font-size:18px;
+  animation:heartFall 4s linear forwards;
 }
 
-.primary {
-  background: var(--primary);
-  color: white;
-}
-
-.secondary {
-  background: #ffd6e0;
-  color: #333;
-}
+/* ANIMATIONS */
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
+@keyframes sparkle{0%{opacity:0;transform:scale(0)}30%{opacity:1}100%{opacity:0;transform:translateY(-60px) scale(1.3)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fall{to{transform:translateY(100vh) rotate(360deg);opacity:0}}
+@keyframes heartFall{from{transform:translateY(-10vh)}to{transform:translateY(110vh);opacity:0}}
 </style>
 </head>
 
 <body>
 
-<!-- 🎵 BACKGROUND MUSIC (FIXED PATH) -->
 <audio id="bgMusic" loop preload="auto">
   <source src="music/perfect.mp3" type="audio/mpeg">
 </audio>
 
-<div class="container">
+<div id="envelopeScreen">
+  <h1>💌 You Got a Love Letter</h1>
+  <div class="envelope" id="envelope"><div class="flap"></div></div>
+  <p><strong>Click the heart ❤️</strong></p>
+  <button class="heart-seal" onclick="openEnvelope(event)">❤️</button>
+</div>
+
+<div class="container" id="app">
   <h1>Riyaaaaa 💖</h1>
   <div class="subtitle">A journey from my heart — Aniket</div>
-  <div class="progress" id="progress">Step 1 / 5</div>
-
+  <div class="progress" id="progress"></div>
   <div class="card" id="content"></div>
-
   <div class="actions" id="actions">
-    <!-- music starts here -->
-    <button class="primary" onclick="startMusic(); next();">Continue</button>
+    <button class="primary" onclick="next()">Continue</button>
   </div>
 </div>
 
 <script>
-/* 🎵 GUARANTEED MUSIC START */
-let musicStarted = false;
+let musicStarted=false;
+let accepted=false;
 
-function startMusic() {
-  if (!musicStarted) {
-    const music = document.getElementById("bgMusic");
-    music.play().then(() => {
-      musicStarted = true;
-    }).catch(() => {
-      console.log("Waiting for user interaction");
-    });
+function startMusic(){
+  if(!musicStarted){
+    const m=document.getElementById("bgMusic");
+    m.volume=0.4;
+    m.play().then(()=>musicStarted=true).catch(()=>{});
   }
 }
 
-const content = document.getElementById("content");
-const progress = document.getElementById("progress");
-const actions = document.getElementById("actions");
+function sparkles(x,y){
+  ["✨","💖","⭐"].forEach(icon=>{
+    for(let i=0;i<5;i++){
+      const s=document.createElement("div");
+      s.className="sparkle";
+      s.innerHTML=icon;
+      s.style.left=x+(Math.random()*60-30)+"px";
+      s.style.top=y+(Math.random()*30-15)+"px";
+      document.body.appendChild(s);
+      setTimeout(()=>s.remove(),1600);
+    }
+  });
+}
 
-let step = 1;
+function openEnvelope(e){
+  startMusic();
+  envelope.classList.add("open");
+  sparkles(e.clientX,e.clientY);
+  setTimeout(()=>{
+    envelopeScreen.style.display="none";
+    app.style.display="block";
+    showStep();
+  },1200);
+}
 
-const steps = [
+const reasons=[
+  "Because you make me smile.","Because your kindness feels real.",
+  "Because you bring peace to my heart.","Because I feel safe with you.",
+  "Because your laugh is beautiful.","Because you listen.",
+  "Because you understand me.","Because you inspire me.",
+  "Because you are patient.","Because you are honest.",
+  "Because you care deeply.","Because you make moments special.",
+  "Because your presence matters.","Because you make my days brighter.",
+  "Because you are gentle.","Because you are genuine.",
+  "Because you mean everything to me.","Because you make my heart happy.",
+  "Because you are you.","Because I love you, Riyaaaaa."
+];
+
+let reasonIndex=0;
+
+const steps=[
   "Hi Riyaaaaa… I wanted to do something meaningful, calm, and honest — just like how you make me feel.",
-
-  `<strong>Our Little Timeline 💕</strong>
-   <div class="timeline">
-     <div class="timeline-item">
-       <span>The First Conversation</span>
-       <p>Something felt natural, comfortable, real.</p>
-     </div>
-     <div class="timeline-item">
-       <span>Getting Closer</span>
-       <p>Your kindness slowly became important to me.</p>
-     </div>
-     <div class="timeline-item">
-       <span>Today</span>
-       <p>I realised you mean more to me than I expected.</p>
-     </div>
+  "Every small moment with you feels special.",
+  `<strong>❤️ 20 Reasons Why I Love You</strong>
+   <div id="reasonBox">
+     <div id="reasonCount"></div>
+     <div id="reasonText"></div>
    </div>`,
-
-  `<strong>20 Reasons Why I Love You</strong>
-   <div class="reasons">
-     ${[
-       "Your smile","Your kindness","Your honesty","Your warmth","Your laugh",
-       "Your care","Your presence","Your heart","Your calm","Your beauty",
-       "Your strength","Your softness","Your support","Your trust","Your respect",
-       "Your patience","Your uniqueness","Your soul","Your love","You"
-     ].map(r => `<div class="reason">${r}</div>`).join("")}
-   </div>`,
-
-  `<strong>Before I say the words you’re waiting for…</strong><br><br>
-   Knowing you has changed how I see small moments.
-   You bring calm to my thoughts and warmth to my heart.
-   I don’t promise perfection — only honesty, effort, and care.
-   Whatever your answer is, I want you to know how deeply you are valued.`,
-
+  "Before anything else, I want you to know how important you are to me.",
   `<div class="love">I LOVE YOU ❤️</div>
-   <p style="text-align:center;margin-top:10px;">
+   <p style="text-align:center">
      Will you be my Valentine?<br><strong>— Aniket</strong>
    </p>`
 ];
 
-function showStep() {
-  content.style.opacity = 0;
-  setTimeout(() => {
-    progress.innerText = `Step ${step} / 5`;
-    content.innerHTML = steps[step - 1];
-    content.style.animation = "fadeIn 1.2s ease forwards";
-  }, 500);
-}
+let step=0;
 
-showStep();
-
-function next() {
+function showStep(){
   step++;
-  if (step <= 5) {
-    showStep();
-    if (step === 5) {
-      actions.innerHTML = `
-        <button class="primary" onclick="yes()">Yes 💕</button>
-        <button class="secondary" onmouseover="moveNo()">No 🙈</button>
-      `;
-    }
+  progress.innerText=`Step ${step} / 5`;
+  content.innerHTML=steps[step-1];
+
+  if(step===3){
+    reasonIndex=0;
+    actions.innerHTML=`<button class="primary" onclick="nextReason()">Next Reason 💖</button>`;
+    showReason();
+  }
+
+  if(step===5){
+    actions.innerHTML=`
+      <button class="primary" onclick="yes()">Yes 💕</button>
+      <button class="secondary" onmouseover="moveNo(this)">No 🙈</button>
+    `;
   }
 }
 
-function yes() {
-  document.body.innerHTML = `
-    <div style="
-      height:100vh;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-      background:var(--bg);
-      color:white;
-      text-align:center;
-      font-family:Segoe UI;">
+function next(){ if(step<5) showStep(); }
+
+function showReason(){
+  reasonCount.innerText=`Reason ${reasonIndex+1} of 20`;
+  reasonText.innerText=reasons[reasonIndex];
+}
+
+function nextReason(){
+  reasonIndex++;
+  if(reasonIndex<20) showReason();
+  else actions.innerHTML=`<button class="primary" onclick="next()">Continue</button>`;
+}
+
+function moveNo(btn){
+  const x=Math.random()*80-40;
+  const y=Math.random()*40-20;
+  btn.style.transform=`translate(${x}px,${y}px)`;
+}
+
+function yes(){
+  if(accepted) return;
+  accepted=true;
+
+  app.style.display="none";
+
+  for(let i=0;i<120;i++){
+    const c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.backgroundColor=`hsl(${Math.random()*360},80%,60%)`;
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3000);
+  }
+
+  setInterval(()=>{
+    const h=document.createElement("div");
+    h.className="heart-rain";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"vw";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),4000);
+  },300);
+
+  document.body.insertAdjacentHTML("beforeend",`
+    <div style="position:fixed;inset:0;
+    display:flex;flex-direction:column;
+    justify-content:center;align-items:center;
+    color:white;text-align:center;z-index:9999;">
       <h1>She Said YES 💖</h1>
       <h2>Happy Valentine’s Day, Riyaaaaa ❤️</h2>
       <p>Forever yours,<br>Aniket</p>
     </div>
-  `;
-}
-
-function moveNo() {
-  const btn = document.querySelector(".secondary");
-  btn.style.transform =
-    "translate(" + (Math.random()*160-80) + "px," +
-    (Math.random()*160-80) + "px)";
+  `);
 }
 </script>
 
