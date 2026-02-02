@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Riyaaaaa 💖</title>
+
+<style>
+:root {
+  --primary: #ff4d6d;
+  --soft: #fff0f5;
+  --bg: linear-gradient(120deg, #ff758c, #ff7eb3);
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background: var(--bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Segoe UI", Arial, sans-serif;
+  overflow: hidden;
+}
+
+.container {
+  width: 390px;
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  padding: 26px;
+}
+
+h1 {
+  color: var(--primary);
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: #777;
+}
+
+.progress {
+  margin: 12px 0 18px;
+  font-size: 13px;
+  color: #555;
+}
+
+.card {
+  background: var(--soft);
+  border-radius: 16px;
+  padding: 18px;
+  min-height: 120px;
+  font-size: 15px;
+  color: #444;
+  opacity: 0;
+  animation: fadeIn 1.2s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.timeline {
+  border-left: 3px solid var(--primary);
+  padding-left: 14px;
+}
+
+.timeline-item span {
+  font-size: 12px;
+  color: #999;
+}
+
+.reasons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.reason {
+  background: white;
+  border-radius: 12px;
+  padding: 10px;
+  font-size: 13px;
+}
+
+.love {
+  font-size: 34px;
+  color: var(--primary);
+  font-weight: bold;
+  text-align: center;
+  animation: pulse 1.4s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+.actions {
+  text-align: center;
+  margin-top: 16px;
+}
+
+button {
+  border: none;
+  border-radius: 22px;
+  padding: 10px 24px;
+  font-size: 14px;
+  cursor: pointer;
+  margin: 6px;
+}
+
+.primary {
+  background: var(--primary);
+  color: white;
+}
+
+.secondary {
+  background: #ffd6e0;
+  color: #333;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎵 BACKGROUND MUSIC (FIXED PATH) -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="music/perfect.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container">
+  <h1>Riyaaaaa 💖</h1>
+  <div class="subtitle">A journey from my heart — Aniket</div>
+  <div class="progress" id="progress">Step 1 / 5</div>
+
+  <div class="card" id="content"></div>
+
+  <div class="actions" id="actions">
+    <!-- music starts here -->
+    <button class="primary" onclick="startMusic(); next();">Continue</button>
+  </div>
+</div>
+
+<script>
+/* 🎵 GUARANTEED MUSIC START */
+let musicStarted = false;
+
+function startMusic() {
+  if (!musicStarted) {
+    const music = document.getElementById("bgMusic");
+    music.play().then(() => {
+      musicStarted = true;
+    }).catch(() => {
+      console.log("Waiting for user interaction");
+    });
+  }
+}
+
+const content = document.getElementById("content");
+const progress = document.getElementById("progress");
+const actions = document.getElementById("actions");
+
+let step = 1;
+
+const steps = [
+  "Hi Riyaaaaa… I wanted to do something meaningful, calm, and honest — just like how you make me feel.",
+
+  `<strong>Our Little Timeline 💕</strong>
+   <div class="timeline">
+     <div class="timeline-item">
+       <span>The First Conversation</span>
+       <p>Something felt natural, comfortable, real.</p>
+     </div>
+     <div class="timeline-item">
+       <span>Getting Closer</span>
+       <p>Your kindness slowly became important to me.</p>
+     </div>
+     <div class="timeline-item">
+       <span>Today</span>
+       <p>I realised you mean more to me than I expected.</p>
+     </div>
+   </div>`,
+
+  `<strong>20 Reasons Why I Love You</strong>
+   <div class="reasons">
+     ${[
+       "Your smile","Your kindness","Your honesty","Your warmth","Your laugh",
+       "Your care","Your presence","Your heart","Your calm","Your beauty",
+       "Your strength","Your softness","Your support","Your trust","Your respect",
+       "Your patience","Your uniqueness","Your soul","Your love","You"
+     ].map(r => `<div class="reason">${r}</div>`).join("")}
+   </div>`,
+
+  `<strong>Before I say the words you’re waiting for…</strong><br><br>
+   Knowing you has changed how I see small moments.
+   You bring calm to my thoughts and warmth to my heart.
+   I don’t promise perfection — only honesty, effort, and care.
+   Whatever your answer is, I want you to know how deeply you are valued.`,
+
+  `<div class="love">I LOVE YOU ❤️</div>
+   <p style="text-align:center;margin-top:10px;">
+     Will you be my Valentine?<br><strong>— Aniket</strong>
+   </p>`
+];
+
+function showStep() {
+  content.style.opacity = 0;
+  setTimeout(() => {
+    progress.innerText = `Step ${step} / 5`;
+    content.innerHTML = steps[step - 1];
+    content.style.animation = "fadeIn 1.2s ease forwards";
+  }, 500);
+}
+
+showStep();
+
+function next() {
+  step++;
+  if (step <= 5) {
+    showStep();
+    if (step === 5) {
+      actions.innerHTML = `
+        <button class="primary" onclick="yes()">Yes 💕</button>
+        <button class="secondary" onmouseover="moveNo()">No 🙈</button>
+      `;
+    }
+  }
+}
+
+function yes() {
+  document.body.innerHTML = `
+    <div style="
+      height:100vh;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      background:var(--bg);
+      color:white;
+      text-align:center;
+      font-family:Segoe UI;">
+      <h1>She Said YES 💖</h1>
+      <h2>Happy Valentine’s Day, Riyaaaaa ❤️</h2>
+      <p>Forever yours,<br>Aniket</p>
+    </div>
+  `;
+}
+
+function moveNo() {
+  const btn = document.querySelector(".secondary");
+  btn.style.transform =
+    "translate(" + (Math.random()*160-80) + "px," +
+    (Math.random()*160-80) + "px)";
+}
+</script>
+
+</body>
+</html>
