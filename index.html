@@ -22,9 +22,9 @@ body{
   box-shadow:0 20px 40px rgba(0,0,0,.25);
   text-align:center;
 }
-#envelopeScreen{max-width:340px;padding:24px;}
+#envelopeScreen{max-width:360px;padding:24px;}
 .envelope{
-  width:180px;height:120px;margin:0 auto 20px;
+  width:180px;height:120px;margin:0 auto 14px;
   background:#ffd6e0;border-radius:8px;position:relative;
 }
 .flap{
@@ -37,6 +37,11 @@ body{
   font-size:42px;background:none;border:none;
   cursor:pointer;animation:pulse 1.3s infinite;
 }
+.qr-box{
+  background:#fff0f5;border-radius:16px;
+  padding:12px;margin:14px 0;
+}
+.qr-box p{font-size:12px;margin:4px 0 8px;color:#555;}
 .container{max-width:390px;padding:22px;display:none;}
 h1{color:var(--primary);margin:0;font-size:22px;}
 .subtitle{font-size:13px;color:#777;}
@@ -55,7 +60,7 @@ button{
 .primary{background:var(--primary);color:#fff;}
 .secondary{background:#ffd6e0;}
 .love{font-size:32px;color:var(--primary);animation:pulse 1.4s infinite;}
-.sparkle,.confetti,.heart-rain{position:absolute;pointer-events:none;}
+.confetti,.heart-rain{position:absolute;pointer-events:none;}
 .confetti{width:8px;height:8px;animation:fall 3s linear;}
 .heart-rain{font-size:18px;animation:heartFall 4s linear;}
 @keyframes pulse{50%{transform:scale(1.2)}}
@@ -70,8 +75,15 @@ button{
   <source src="music/perfect.mp3" type="audio/mpeg">
 </audio>
 
+<!-- FRONT SCREEN WITH QR -->
 <div id="envelopeScreen">
   <h1>💌 You Got a Love Letter</h1>
+
+  <div class="qr-box">
+    <p>📱 Scan to open this page</p>
+    <img id="frontQR" width="140" height="140" alt="QR Code">
+  </div>
+
   <div class="envelope" id="envelope"><div class="flap"></div></div>
   <p><strong>Click the heart ❤️</strong></p>
   <button class="heart-seal" onclick="openEnvelope()">❤️</button>
@@ -97,6 +109,9 @@ box-shadow:0 10px 25px rgba(0,0,0,.25);">
 
 <script>
 const SITE_URL = "https://your-username.github.io/your-repo-name/";
+document.getElementById("frontQR").src =
+  "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(SITE_URL);
+
 let musicStarted=false,accepted=false,step=0,reasonIndex=0;
 
 const reasons=[
@@ -132,14 +147,12 @@ function startMusic(){
   document.getElementById("soundBtn").innerHTML="🔊";
   musicStarted=true;
 }
-
 function toggleSound(){
   const m=document.getElementById("bgMusic");
   m.muted=!m.muted;
   document.getElementById("soundBtn").innerHTML=m.muted?"🔇":"🔊";
   if(!m.muted) m.play();
 }
-
 function openEnvelope(){
   startMusic();
   envelope.classList.add("open");
@@ -149,7 +162,6 @@ function openEnvelope(){
     showStep();
   },1200);
 }
-
 function showStep(){
   step++;
   progress.innerText=`Step ${step} / 5`;
@@ -165,24 +177,19 @@ function showStep(){
       <button class="secondary" ontouchstart="moveNo(this)">No 🙈</button>`;
   }
 }
-
 function next(){ if(step<5) showStep(); }
-
 function showReason(){
   reasonCount.innerText=`Reason ${reasonIndex+1} of 20`;
   reasonText.innerText=reasons[reasonIndex];
 }
-
 function nextReason(){
   reasonIndex++;
   if(reasonIndex<20) showReason();
   else actions.innerHTML=`<button class="primary" onclick="next()">Continue</button>`;
 }
-
 function moveNo(btn){
   btn.style.transform=`translate(${Math.random()*80-40}px,${Math.random()*40-20}px)`;
 }
-
 function yes(){
   if(accepted) return; accepted=true;
   app.style.display="none";
@@ -205,7 +212,7 @@ function yes(){
       <h1 style="color:#ff4d6d;">She Said YES 💖</h1>
       <p>Happy Valentine’s Day, Riyaaaaa ❤️<br><strong>Aniket</strong></p>
       <p style="font-size:13px;">🎁 Scan to relive this moment</p>
-      <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${SITE_URL}">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(SITE_URL)}">
     </div>
   </div>`);
 }
