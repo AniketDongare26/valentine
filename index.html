@@ -17,41 +17,57 @@ body{
   display:flex;justify-content:center;align-items:center;
   overflow:hidden;padding:12px;
 }
-#envelopeScreen,.container{
-  background:#fff;border-radius:24px;
+
+/* Envelope */
+#envelopeScreen{
+  width:100%;max-width:340px;
+  background:#fff;padding:24px;
+  border-radius:24px;text-align:center;
   box-shadow:0 20px 40px rgba(0,0,0,.25);
-  text-align:center;
 }
-#envelopeScreen{max-width:360px;padding:24px;}
 .envelope{
-  width:180px;height:120px;margin:0 auto 14px;
-  background:#ffd6e0;border-radius:8px;position:relative;
+  width:180px;height:120px;
+  margin:0 auto 20px;
+  background:#ffd6e0;
+  border-radius:8px;position:relative;
 }
 .flap{
-  position:absolute;inset:0;background:#ffb3c1;
+  position:absolute;inset:0;
+  background:#ffb3c1;
   clip-path:polygon(0 0,50% 55%,100% 0);
-  transform-origin:top;transition:.8s;
+  transform-origin:top;
+  transition:.8s;
 }
 .open .flap{transform:rotateX(180deg);}
 .heart-seal{
   font-size:42px;background:none;border:none;
   cursor:pointer;animation:pulse 1.3s infinite;
 }
-.qr-box{
-  background:#fff0f5;border-radius:16px;
-  padding:12px;margin:14px 0;
+
+/* Main container */
+.container{
+  width:100%;max-width:390px;
+  background:#fff;border-radius:22px;
+  box-shadow:0 20px 40px rgba(0,0,0,.25);
+  padding:22px;display:none;
 }
-.qr-box p{font-size:12px;margin:4px 0 8px;color:#555;}
-.container{max-width:390px;padding:22px;display:none;}
 h1{color:var(--primary);margin:0;font-size:22px;}
 .subtitle{font-size:13px;color:#777;}
-.progress{margin:12px 0;font-size:13px;color:#555;}
+.progress{margin:12px 0 18px;font-size:13px;color:#555;}
 .card{
-  background:var(--soft);border-radius:16px;
-  padding:18px;min-height:150px;font-size:15px;
+  background:var(--soft);
+  border-radius:16px;
+  padding:18px;
+  min-height:160px;
+  font-size:15px;
+  color:#444;
+  animation:fadeIn 1s forwards;
 }
-#reasonBox{background:#fff;border-radius:14px;padding:16px;}
-.actions{margin-top:16px;}
+#reasonBox{
+  background:#fff;border-radius:14px;
+  padding:16px;text-align:center;
+}
+.actions{text-align:center;margin-top:16px;}
 button{
   border:none;border-radius:22px;
   padding:12px 26px;font-size:15px;
@@ -59,11 +75,20 @@ button{
 }
 .primary{background:var(--primary);color:#fff;}
 .secondary{background:#ffd6e0;}
-.love{font-size:32px;color:var(--primary);animation:pulse 1.4s infinite;}
-.confetti,.heart-rain{position:absolute;pointer-events:none;}
-.confetti{width:8px;height:8px;animation:fall 3s linear;}
-.heart-rain{font-size:18px;animation:heartFall 4s linear;}
+.love{
+  font-size:32px;color:var(--primary);
+  font-weight:bold;text-align:center;
+  animation:pulse 1.4s infinite;
+}
+
+/* Effects */
+.sparkle{position:absolute;font-size:18px;animation:sparkle 1.6s ease forwards;}
+.confetti{position:absolute;width:8px;height:8px;animation:fall 3s linear forwards;}
+.heart-rain{position:absolute;font-size:18px;animation:heartFall 4s linear forwards;}
+
 @keyframes pulse{50%{transform:scale(1.2)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1}}
+@keyframes sparkle{to{opacity:0;transform:translateY(-60px)}}
 @keyframes fall{to{transform:translateY(100vh) rotate(360deg);opacity:0}}
 @keyframes heartFall{to{transform:translateY(110vh);opacity:0}}
 </style>
@@ -75,15 +100,8 @@ button{
   <source src="music/perfect.mp3" type="audio/mpeg">
 </audio>
 
-<!-- FRONT SCREEN WITH QR -->
 <div id="envelopeScreen">
   <h1>💌 You Got a Love Letter</h1>
-
-  <div class="qr-box">
-    <p>📱 Scan to open this page</p>
-    <img id="frontQR" width="140" height="140" alt="QR Code">
-  </div>
-
   <div class="envelope" id="envelope"><div class="flap"></div></div>
   <p><strong>Click the heart ❤️</strong></p>
   <button class="heart-seal" onclick="openEnvelope()">❤️</button>
@@ -99,20 +117,9 @@ button{
   </div>
 </div>
 
-<button id="soundBtn" onclick="toggleSound()"
-style="position:fixed;top:16px;right:16px;z-index:9999;
-border:none;background:white;border-radius:50%;
-width:46px;height:46px;font-size:20px;
-box-shadow:0 10px 25px rgba(0,0,0,.25);">
-🔇
-</button>
-
 <script>
-const SITE_URL = "https://your-username.github.io/your-repo-name/";
-document.getElementById("frontQR").src =
-  "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(SITE_URL);
-
-let musicStarted=false,accepted=false,step=0,reasonIndex=0;
+let musicStarted=false, accepted=false;
+let step=0, reasonIndex=0;
 
 const reasons=[
 "Because you make me smile.","Because your kindness feels real.",
@@ -128,31 +135,36 @@ const reasons=[
 ];
 
 const steps=[
-"Hi Riyaaaaa… I wanted to do something meaningful and honest.",
+"Hi Riyaaaaa… I wanted to do something meaningful, calm, and honest — just like how you make me feel.",
 "Every small moment with you feels special.",
 `<strong>❤️ 20 Reasons Why I Love You</strong>
-<div id="reasonBox">
-<div id="reasonCount"></div>
-<div id="reasonText"></div>
-</div>`,
-"You are truly important to me.",
+ <div id="reasonBox">
+   <div id="reasonCount"></div>
+   <div id="reasonText"></div>
+ </div>`,
+"Before anything else, I want you to know how important you are to me.",
+
+`<h3>🌹 Rose Day</h3><p>A rose for you, because your presence makes my world bloom.</p>`,
+`<h3>💍 Propose Day</h3><p>I don’t need perfect words. My heart already chose you.</p>`,
+`<h3>🍫 Chocolate Day</h3><p>Life feels sweeter with you, just like chocolate.</p>`,
+`<h3>🧸 Teddy Day</h3><p>I want to be your comfort when the world feels heavy.</p>`,
+`<h3>🤝 Promise Day</h3><p>I promise to care, respect, and stand by you always.</p>`,
+`<h3>🤗 Hug Day</h3><p>If I could hug you right now, I’d never let go.</p>`,
+`<h3>❤️ Valentine’s Day</h3><p>Today is about us, and everything I feel for you.</p>`,
+
 `<div class="love">I LOVE YOU ❤️</div>
-<p>Will you be my Valentine?<br><strong>— Aniket</strong></p>`
+ <p style="text-align:center">
+   Will you be my Valentine?<br><strong>— Aniket</strong>
+ </p>`
 ];
 
 function startMusic(){
   if(musicStarted) return;
   const m=document.getElementById("bgMusic");
   m.muted=false;m.volume=0.5;m.play();
-  document.getElementById("soundBtn").innerHTML="🔊";
   musicStarted=true;
 }
-function toggleSound(){
-  const m=document.getElementById("bgMusic");
-  m.muted=!m.muted;
-  document.getElementById("soundBtn").innerHTML=m.muted?"🔇":"🔊";
-  if(!m.muted) m.play();
-}
+
 function openEnvelope(){
   startMusic();
   envelope.classList.add("open");
@@ -162,34 +174,43 @@ function openEnvelope(){
     showStep();
   },1200);
 }
+
 function showStep(){
   step++;
-  progress.innerText=`Step ${step} / 5`;
+  progress.innerText=`Step ${step} / ${steps.length}`;
   content.innerHTML=steps[step-1];
+
   if(step===3){
     reasonIndex=0;
     actions.innerHTML=`<button class="primary" onclick="nextReason()">Next Reason 💖</button>`;
     showReason();
-  }
-  if(step===5){
+  }else if(step===steps.length){
     actions.innerHTML=`
       <button class="primary" onclick="yes()">Yes 💕</button>
-      <button class="secondary" ontouchstart="moveNo(this)">No 🙈</button>`;
+      <button class="secondary" ontouchstart="moveNo(this)">No 🙈</button>
+    `;
+  }else{
+    actions.innerHTML=`<button class="primary" onclick="next()">Continue</button>`;
   }
 }
-function next(){ if(step<5) showStep(); }
+
+function next(){ if(step<steps.length) showStep(); }
+
 function showReason(){
   reasonCount.innerText=`Reason ${reasonIndex+1} of 20`;
   reasonText.innerText=reasons[reasonIndex];
 }
+
 function nextReason(){
   reasonIndex++;
   if(reasonIndex<20) showReason();
   else actions.innerHTML=`<button class="primary" onclick="next()">Continue</button>`;
 }
+
 function moveNo(btn){
   btn.style.transform=`translate(${Math.random()*80-40}px,${Math.random()*40-20}px)`;
 }
+
 function yes(){
   if(accepted) return; accepted=true;
   app.style.display="none";
@@ -205,14 +226,12 @@ function yes(){
 
   document.body.insertAdjacentHTML("beforeend",`
   <div style="position:fixed;inset:0;
-  background:linear-gradient(120deg,#ff758c,#ff7eb3);
-  display:flex;align-items:center;justify-content:center;z-index:99999;">
-    <div style="background:white;padding:26px;
-    border-radius:24px;text-align:center;max-width:340px;">
-      <h1 style="color:#ff4d6d;">She Said YES 💖</h1>
-      <p>Happy Valentine’s Day, Riyaaaaa ❤️<br><strong>Aniket</strong></p>
-      <p style="font-size:13px;">🎁 Scan to relive this moment</p>
-      <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(SITE_URL)}">
+  display:flex;justify-content:center;align-items:center;
+  color:white;text-align:center;z-index:9999;">
+    <div>
+      <h1>She Said YES 💖</h1>
+      <h2>Happy Valentine’s Day, Riyaaaaa ❤️</h2>
+      <p>Forever yours,<br>Aniket</p>
     </div>
   </div>`);
 }
@@ -220,3 +239,4 @@ function yes(){
 
 </body>
 </html>
+
