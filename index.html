@@ -84,7 +84,7 @@ button{
 
 <body>
 
-<!-- ✅ FIXED AUDIO (ONLY CHANGE HERE) -->
+<!-- ✅ FIXED AUDIO (music starts on heart click) -->
 <audio id="bgMusic" loop preload="auto">
   <source src="./music/perfect.mp3" type="audio/mpeg">
 </audio>
@@ -107,7 +107,7 @@ button{
 </div>
 
 <script>
-/* ✅ ORIGINAL LOGIC — UNCHANGED (ONLY MUSIC START FIXED) */
+/* ✅ ORIGINAL LOGIC — UNCHANGED (ONLY MUSIC TRIGGER FIXED) */
 let musicStarted=false, accepted=false;
 let step=0, reasonIndex=0;
 
@@ -149,17 +149,14 @@ const steps=[
 ];
 
 function openEnvelope(){
-
-  // 🔥 MUSIC STARTS EXACTLY ON HEART CLICK
   if(!musicStarted){
-    const music = document.getElementById("bgMusic");
-    music.volume = 0.5;
+    const music=document.getElementById("bgMusic");
+    music.volume=0.5;
     music.play().catch(()=>{});
-    musicStarted = true;
+    musicStarted=true;
   }
 
   envelope.classList.add("open");
-
   setTimeout(()=>{
     envelopeScreen.style.display="none";
     app.style.display="block";
