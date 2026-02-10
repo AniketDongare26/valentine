@@ -84,8 +84,9 @@ button{
 
 <body>
 
-<audio id="bgMusic" loop muted playsinline>
-  <source src="music/perfect.mp3" type="audio/mpeg">
+<!-- ✅ FIXED AUDIO (ONLY CHANGE HERE) -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="./music/perfect.mp3" type="audio/mpeg">
 </audio>
 
 <div id="envelopeScreen">
@@ -106,7 +107,7 @@ button{
 </div>
 
 <script>
-/* ✅ ORIGINAL LOGIC — UNCHANGED */
+/* ✅ ORIGINAL LOGIC — UNCHANGED (ONLY MUSIC START FIXED) */
 let musicStarted=false, accepted=false;
 let step=0, reasonIndex=0;
 
@@ -123,7 +124,6 @@ const reasons=[
 "Because you are you.","Because I love you, Riyaaaaa."
 ];
 
-/* 🔥 ONLY ADDITION: 7 DAYS PAGES ADDED */
 const steps=[
 "Hi Riyaaaaa… I wanted to do something meaningful, calm, and honest — just like how you make me feel.",
 "Every small moment with you feels special.",
@@ -148,21 +148,25 @@ const steps=[
  </p>`
 ];
 
-function startMusic(){
-  if(musicStarted) return;
-  const m=document.getElementById("bgMusic");
-  m.muted=false;m.volume=0.5;m.play();
-  musicStarted=true;
-}
 function openEnvelope(){
-  startMusic();
+
+  // 🔥 MUSIC STARTS EXACTLY ON HEART CLICK
+  if(!musicStarted){
+    const music = document.getElementById("bgMusic");
+    music.volume = 0.5;
+    music.play().catch(()=>{});
+    musicStarted = true;
+  }
+
   envelope.classList.add("open");
+
   setTimeout(()=>{
     envelopeScreen.style.display="none";
     app.style.display="block";
     showStep();
   },1200);
 }
+
 function showStep(){
   step++;
   progress.innerText=`Step ${step} / ${steps.length}`;
@@ -210,4 +214,3 @@ function yes(){
 
 </body>
 </html>
-
