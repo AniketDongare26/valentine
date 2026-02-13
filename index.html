@@ -6,7 +6,6 @@
 <title>For Riyaaaaa 💖</title>
 
 <style>
-/* ✅ ORIGINAL STYLES — UNCHANGED */
 :root{
   --primary:#ff4d6d;
   --soft:#fff0f5;
@@ -79,12 +78,27 @@ button{
 .confetti{position:absolute;width:8px;height:8px;animation:fall 3s linear forwards;}
 @keyframes pulse{50%{transform:scale(1.2)}}
 @keyframes fall{to{transform:translateY(100vh) rotate(360deg);opacity:0}}
+
+/* ✅ ADDED MOBILE SUPPORT */
+@media(max-width:480px){
+  body{padding:8px;}
+  .container{padding:18px;}
+  .card{font-size:14px;}
+  h1{font-size:20px;}
+  button{padding:10px 20px;font-size:14px;}
+  .envelope{width:150px;height:100px;}
+}
+
+/* ✅ ADDED POPUP ANIMATION */
+@keyframes popup{
+  from{transform:scale(0.6);opacity:0;}
+  to{transform:scale(1);opacity:1;}
+}
 </style>
 </head>
 
 <body>
 
-<!-- ✅ FIXED AUDIO (music starts on heart click) -->
 <audio id="bgMusic" loop preload="auto">
   <source src="./music/perfect.mp3" type="audio/mpeg">
 </audio>
@@ -106,8 +120,35 @@ button{
   </div>
 </div>
 
+<!-- ✅ FINAL ROMANTIC POPUP ADDED -->
+<div id="finalPopup" style="
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.7);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:999;
+">
+  <div style="
+  background:#fff;
+  padding:28px;
+  border-radius:20px;
+  text-align:center;
+  max-width:320px;
+  animation:popup 0.5s ease;
+  ">
+    <h2 style="color:#ff4d6d;">She Said Yes 💕</h2>
+    <p>
+      I Knew It Was Always You.<br>
+      Thank You For Choosing Me.<br><br>
+      Happy Valentine’s Day My Love ❤️<br>
+      — Aniket
+    </p>
+  </div>
+</div>
+
 <script>
-/* ✅ ORIGINAL LOGIC — UNCHANGED (ONLY MUSIC TRIGGER FIXED) */
 let musicStarted=false, accepted=false;
 let step=0, reasonIndex=0;
 
@@ -145,6 +186,8 @@ const steps=[
 `<div class="love">I LOVE YOU ❤️</div>
  <p style="text-align:center">
  Will you be my Valentine?<br><strong>— Aniket</strong>
+ <br><br>I Knew It Was A Yes 💕<br>
+ Happy Valentine’s Day ❤️
  </p>`
 ];
 
@@ -206,6 +249,8 @@ function yes(){
     document.body.appendChild(c);
     setTimeout(()=>c.remove(),3000);
   }
+
+  document.getElementById("finalPopup").style.display="flex";
 }
 </script>
 
